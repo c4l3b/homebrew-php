@@ -37,6 +37,7 @@ class AbstractPhp < Formula
     depends_on "icu4c"
     depends_on "imap-uw" if build.include?("with-imap")
     depends_on "jpeg"
+    depends_on "webp" if name.split("::")[2].downcase.start_with("php55", "php56", "php7")
     depends_on "libpng"
     depends_on "libxml2" if build.include?("with-homebrew-libxml2") || MacOS.version < :lion || MacOS.version >= :el_capitan
     depends_on "unixodbc" unless build.include?("without-unixodbc")
@@ -356,6 +357,14 @@ INFO
       end
 
       args << "--enable-zend-signals"
+    end
+
+    if php_version.start_with?("5.5", "5.6")
+      args << "--with-vpx-dir=#{Formula['webp'].opt_prefix}"
+    end
+
+    if php_version.start_with?("7.")
+      args << "--with-webp-dir=#{Formula['webp'].opt_prefix}"
     end
 
     if build.with? "thread-safety"
