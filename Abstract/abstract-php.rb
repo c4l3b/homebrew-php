@@ -37,7 +37,7 @@ class AbstractPhp < Formula
     depends_on "icu4c"
     depends_on "imap-uw" if build.include?("with-imap")
     depends_on "jpeg"
-    depends_on "webp" if name.split("::")[2].downcase.start_with("php55", "php56", "php7")
+    depends_on "webp" if name.split("::")[2].downcase.start_with?("php55", "php56", "php7")
     depends_on "libpng"
     depends_on "libxml2" if build.include?("with-homebrew-libxml2") || MacOS.version < :lion || MacOS.version >= :el_capitan
     depends_on "unixodbc" unless build.include?("without-unixodbc")
