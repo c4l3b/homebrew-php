@@ -84,6 +84,9 @@ class AbstractPhp < Formula
     unless name.split("::")[2].casecmp("php53").zero?
       option "with-phpdbg", "Enable building of the phpdbg SAPI executable"
     end
+    if name.split("::")[2].downcase.start_with("php55", "php56", "php7")
+      option "with-webp", "Build with WebP support in the GD image library"
+    end
     option "with-thread-safety", "Build with thread safety"
     option "without-bz2", "Build without bz2 support"
     option "without-fpm", "Disable building of the fpm SAPI executable"
@@ -359,12 +362,14 @@ INFO
       args << "--enable-zend-signals"
     end
 
-    if php_version.start_with?("5.5", "5.6")
-      args << "--with-vpx-dir=#{Formula['webp'].opt_prefix}"
-    end
+    if build.with? "webp"
+      if php_version.start_with?("5.5", "5.6")
+        args << "--with-vpx-dir=#{Formula['webp'].opt_prefix}"
+      end
 
-    if php_version.start_with?("7.")
-      args << "--with-webp-dir=#{Formula['webp'].opt_prefix}"
+      if php_version.start_with?("7.")
+        args << "--with-webp-dir=#{Formula['webp'].opt_prefix}"
+      end
     end
 
     if build.with? "thread-safety"
