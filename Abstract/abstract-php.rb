@@ -37,8 +37,8 @@ class AbstractPhp < Formula
     depends_on "icu4c"
     depends_on "imap-uw" if build.include?("with-imap")
     depends_on "jpeg"
-    depends_on "webp" if name.split("::")[2].downcase.start_with?("php7")
-    depends_on "libvpx" if name.split("::")[2].downcase.start_with?("php55", "php56")
+    depends_on "webp" => :optional if name.split("::")[2].downcase.start_with?("php7")
+    depends_on "libvpx" => :optional if name.split("::")[2].downcase.start_with?("php55", "php56")
     depends_on "libpng"
     depends_on "libxml2" if build.include?("with-homebrew-libxml2") || MacOS.version < :lion || MacOS.version >= :el_capitan
     depends_on "unixodbc" unless build.include?("without-unixodbc")
@@ -84,9 +84,6 @@ class AbstractPhp < Formula
     option "with-pdo-oci", "Include Oracle databases (requries ORACLE_HOME be set)"
     unless name.split("::")[2].casecmp("php53").zero?
       option "with-phpdbg", "Enable building of the phpdbg SAPI executable"
-    end
-    if name.split("::")[2].downcase.start_with?("php55", "php56", "php7")
-      option "with-webp", "Build with WebP support in the GD image library"
     end
     option "with-thread-safety", "Build with thread safety"
     option "without-bz2", "Build without bz2 support"
