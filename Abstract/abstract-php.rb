@@ -360,14 +360,12 @@ INFO
       args << "--enable-zend-signals"
     end
 
-    if build.with? "webp"
-      if php_version.start_with?("5.5", "5.6")
-        args << "--with-vpx-dir=#{Formula['libvpx'].opt_prefix}"
-      end
+    if build.with? "libvpx"
+      args << "--with-vpx-dir=#{Formula['libvpx'].opt_prefix}"
+    end
 
-      if php_version.start_with?("7.")
-        args << "--with-webp-dir=#{Formula['webp'].opt_prefix}"
-      end
+    if build.with? "webp"
+      args << "--with-webp-dir=#{Formula['webp'].opt_prefix}"
     end
 
     if build.with? "thread-safety"
